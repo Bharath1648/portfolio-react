@@ -1,0 +1,190 @@
+/* About.css — match screenshot style (dark cards, pink accents) */
+
+:root{
+  --bg:#0f0f10;
+  --card-bg: rgba(255,255,255,0.02);
+  --muted: #cfd3d7;
+  --muted-2:#9aa0a6;
+  --pink: #e74b8b;
+  --accent-gradient: linear-gradient(90deg,#977dff,#0600ab);
+  --card-border: rgba(255,255,255,0.045);
+}
+
+/* Page layout */
+.about-section {
+  width: 100%;
+  padding: 110px 40px 80px;
+  background: var(--bg);
+  color: whitesmoke;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+/* header/title */
+.about-header {
+  max-width: 1100px;
+  margin: 0 auto 34px;
+  text-align: center;
+}
+.about-main {
+  font-size: 44px;
+  margin: 0;
+  font-weight: 800;
+  color: #fff;
+}
+.about-main span {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.about-sub {
+  margin-top: 12px;
+  color: var(--muted-2);
+  font-size: 16px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* grid */
+.about-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+/* left profile */
+.about-left { display:flex; align-items:end; justify-content:center; }
+.profile-wrap{
+  width: 280px;
+  height: 380px;
+  border-radius: 18px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  padding: 16px;
+  display:flex; align-items:center; justify-content:center;
+}
+.profile-image{
+  width:100%;
+  height:auto;
+  border-radius:14px;
+  object-fit:cover;
+  display:block;
+}
+/* Background glow that follows mouse */
+.profile-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Light glow layer */
+.profile-wrap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 260px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  /* default center */
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+
+  border-radius: 50%;
+
+
+  filter: blur(40px);
+  transition: top 0.12s ease-out, left 0.12s ease-out;
+}
+
+/* Zoom effect (already added earlier) */
+.profile-image {
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.profile-wrap:hover .profile-image {
+  transform: scale(1.08);
+  filter: brightness(1.10);
+}
+
+/* right cards */
+.about-right{ display:flex; flex-direction:column; gap:20px; }
+
+/* base card */
+.card{
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 22px;
+  border: 1px solid var(--card-border);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.01), 0 8px 28px rgba(0,0,0,0.6);
+  color: #e9eef6;
+}
+
+/* titles */
+.card-title{
+  color: var(--pink);
+  font-size: 20px;
+  margin: 0 0 12px;
+  font-weight:700;
+}
+
+/* whoami text */
+.card-text{ color: #bfc7cf; line-height:1.7; margin:0; font-size:15px; }
+
+/* contact list */
+.contact-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:14px; }
+.contact-list li{ display:flex; align-items:center; gap:14px; }
+
+/* icon */
+.contact-icon{
+  width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center;
+  color: var(--pink); font-size:20px; flex-shrink:0;
+}
+
+/* contact link style to match screenshot */
+.contact-link{
+  color: var(--muted); text-decoration:none; font-size:18px; font-weight:600;
+  transition: color .22s ease, transform .18s ease, text-shadow .18s ease;
+}
+.contact-link:hover{
+  color: var(--pink);
+  transform: translateX(4px);
+  text-shadow: 0 0 10px rgba(231,75,139,0.25);
+}
+
+/* education old-style rows */
+.old-edu-style{ padding:22px; border-radius:12px; background:var(--card-bg); border:1px solid var(--card-border); }
+.old-style-list{ display:flex; flex-direction:column; gap:18px; }
+.old-style-item{
+  border-left:4px solid var(--pink);
+  padding-left:16px;
+  display:flex; align-items:center; justify-content:space-between;
+  transition: transform .18s ease, background .18s ease;
+  border-radius:6px;
+}
+.old-style-item .edu-left strong{ color:#fff; font-weight:700; font-size:16px; display:block; }
+.old-style-item .edu-sub{ color: #b4b7bd; font-size:14px; margin-top:4px; }
+.old-style-item .edu-date{ color:#8c9197; font-size:13px; margin-top:4px; }
+.old-style-item .edu-right{ color:var(--pink); font-weight:700; font-size:14px; white-space:nowrap; }
+
+/* hover */
+.old-style-item:hover{ background: rgba(255,255,255,0.02); transform: translateX(4px); border-left-color:#ff5fa2; }
+
+/* responsive */
+@media (max-width:980px){
+  .about-container{ grid-template-columns: 1fr; gap:26px; }
+  .about-left{ align-items:center; }
+  .profile-wrap{ width:320px; height:380px; margin:0 auto; }
+}
+@media (max-width:480px){
+  .about-section{ padding:90px 18px 60px; }
+  .profile-wrap{ width:260px; height:320px; }
+  .contact-list li{ gap:10px; }
+  .contact-link{ font-size:16px; }
+}

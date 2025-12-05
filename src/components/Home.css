@@ -1,0 +1,251 @@
+/* ================================
+   FULLSCREEN HERO SECTION
+================================ */
+.home {
+  min-height: 100vh;
+  width: 100%;
+  padding: 64px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+  background: #0f1a1b;
+  color: white;
+  text-align: left;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ================================
+   CONTENT WRAPPER
+================================ */
+.home-content {
+  max-width: 720px;
+  animation: fadeUp 1s ease both;
+}
+
+.welcome {
+  color: #ff1695;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* ================================
+   TITLES & TEXT
+================================ */
+.title {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.02;
+  margin: 6px 0 8px 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.title span {
+  background: linear-gradient(to right, #ff4d67, #c850c0, #5f65ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 30px;
+  margin-bottom: 14px;
+  font-weight: 600;
+  color: #D1D5DB;
+}
+
+.description {
+  font-size: 18px;
+  max-width: 640px;
+  color: #d1d5db;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.cta-row {
+  display: flex;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+/* CTA BUTTONS */
+.cta-btn {
+  display: inline-block;
+  padding: 12px 22px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  text-decoration:none;
+  border-radius: 10px;
+  background:#D6204E;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
+}
+
+.cta-btn.alt {
+  background: transparent;
+  border: 0.5px solid #D6204E;
+    color: #D6204E;
+}
+
+.cta-btn:hover {
+  transform: translateY(-4px);
+}
+
+
+/* ================================
+   PROFILE IMAGE CARD (3D + ZOOM)
+================================ */
+
+/* CSS variables for tilt + zoom */
+.home-image {
+  --size: 360px;           /* outer size of card */
+  --inner-size: calc(var(--size) - 44px);
+  --rx: 0deg;              /* JS sets rotation X */
+  --ry: 0deg;              /* JS sets rotation Y */
+  --scale: 1;              /* scale for zoom effect */
+
+  width: var(--size);
+  height: var(--size);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  perspective: 1200px;
+  cursor: pointer;
+  transition: transform 320ms cubic-bezier(.2,.9,.2,1);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* BACK CARD like your screenshot */
+.home-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  z-index: 1;
+
+  background: linear-gradient(180deg,
+     rgba(255,255,255,0.03),
+     rgba(0,0,0,0.02)
+  );
+
+  box-shadow:
+    0 20px 40px rgba(8,10,20,0.65),
+    0 4px 18px rgba(0,0,0,0.25);
+
+  pointer-events: none;
+  transition: filter 300ms ease, transform 300ms ease;
+}
+
+/* GLOW RING */
+.home-image::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 18px;
+  z-index: 0;
+
+  background: linear-gradient(90deg,
+       rgba(151,125,255,0.25) 0%,
+       rgba(95,101,255,0.22) 45%,
+       rgba(6,0,171,0.28) 100%);
+
+  filter: blur(14px) saturate(120%);
+  opacity: 0.85;
+  pointer-events: none;
+  transition: filter 320ms ease, opacity 320ms ease, transform 300ms ease;
+}
+
+/* ACTUAL PHOTO */
+.home-image img {
+  width: var(--inner-size);
+  height: var(--inner-size);
+  border-radius: 16px;
+  object-fit: cover;
+
+  display: block;
+  z-index: 2;
+
+  box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+  transform-origin: center;
+  transition: transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms ease;
+  will-change: transform;
+}
+
+/* COMBINE tilt + zoom */
+.home-image {
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--scale));
+}
+
+/* ON HOVER → ZOOM + elevate glow */
+.home-image:hover,
+.home-image:focus {
+  --scale: 1.06;   /* ZOOM effect */
+}
+
+.home-image:hover img,
+.home-image:focus img {
+  transform: scale(1.02) translateY(-6px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+}
+
+.home-image:hover::after,
+.home-image:focus::after {
+  filter: blur(16px) saturate(140%);
+  opacity: 1;
+  transform: translateY(-6px) scale(1.03);
+}
+
+.home-image:hover::before,
+.home-image:focus::before {
+  transform: translateY(-8px);
+  filter: blur(10px);
+}
+
+/* ACCESSIBLE FOCUS */
+.home-image:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(151,125,255,0.15);
+}
+
+
+/* ================================
+   ANIMATIONS
+================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ================================
+   RESPONSIVE DESIGN
+================================ */
+@media (max-width: 1200px) {
+  .home { gap: 36px; padding: 48px; }
+  .home-image { --size: 300px; --inner-size: calc(var(--size) - 40px); }
+  .title { font-size: 48px; }
+}
+
+@media (max-width: 900px) {
+  .home {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 24px;
+    gap: 28px;
+  }
+  .home-image { --size: 220px; --inner-size: calc(var(--size) - 36px); }
+  .title { font-size: 36px; }
+  .subtitle { font-size: 20px; }
+  .description { font-size: 15px; }
+  .cta-row { justify-content: center; }
+}
+
+@media (max-width: 420px) {
+  .home-image { --size: 180px; --inner-size: calc(var(--size) - 34px); }
+}
