@@ -14,7 +14,7 @@ const projects = [
     subtitle: 'An intelligent emotion-based music recommendation system that analyzes user mood and preferences to suggest personalized playlists.',
     features: ['Emotion detection', 'Playlist generation', 'Music recommendation', 'User analytics'],
     tech: normalizeTech(['Python', 'Machine Learning']),
-    github: 'https://github.com/yourusername/moodify'
+    github: 'https://github.com/Sohailll004/Depression.Ai.git'
   },
   {
     id: 2,

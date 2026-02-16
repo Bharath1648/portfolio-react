@@ -1,11 +1,21 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FiCode, FiCpu, FiLayers, FiServer, FiTool, FiMonitor } from "react-icons/fi";
+import {
+  FiCode,
+  FiCpu,
+  FiLayers,
+  FiServer,
+  FiTool,
+  FiMonitor,
+} from "react-icons/fi";
 import "./Skills.css";
+
+/* ================= Skill Data ================= */
 
 const skillGroups = [
   {
     title: "Programming Languages",
+    icon: <FiCode />,
     items: [
       { name: "Java", value: 90 },
       { name: "Python", value: 85 },
@@ -15,16 +25,18 @@ const skillGroups = [
   },
   {
     title: "Frontend Technologies",
+    icon: <FiLayers />,
     items: [
       { name: "React", value: 85 },
       { name: "HTML5", value: 95 },
       { name: "CSS3", value: 90 },
-      { name: "Bootstrap", value: 85},
+      { name: "Bootstrap", value: 85 },
       { name: "Tailwind CSS", value: 80 },
     ],
   },
   {
     title: "Backend & Database",
+    icon: <FiServer />,
     items: [
       { name: "SQL", value: 85 },
       { name: "PL/SQL", value: 80 },
@@ -34,6 +46,7 @@ const skillGroups = [
   },
   {
     title: "Tools & Technologies",
+    icon: <FiTool />,
     items: [
       { name: "Git & GitHub", value: 90 },
       { name: "VS Code", value: 95 },
@@ -44,21 +57,44 @@ const skillGroups = [
   },
 ];
 
-const container = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } };
-const cardVariant = {
-  hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+/* ================= Animations ================= */
+
+const container = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15 },
+  },
 };
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 25 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
+
+/* ================= Main Component ================= */
 
 export default function Skills() {
   return (
     <section id="skills" className="skills-section">
+      <div className="background-glow"></div>
+
       <header className="skills-header">
-        <h2 className="skills-title">
+        <motion.h2
+          className="skills-title"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
           Technical <span>Skills</span>
-        </h2>
+        </motion.h2>
+
         <p className="skills-sub">
-          Here are the technologies and tools I work with to bring ideas to life.
+          Technologies and tools I use to build scalable and intelligent applications.
         </p>
       </header>
 
@@ -69,55 +105,39 @@ export default function Skills() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        {/* left / right groups: display two columns */}
-        <div className="skills-column">
-          {/* left column: first two groups */}
-          {skillGroups.slice(0, 2).map((group, idx) => (
-            <SkillCard key={group.title} group={group} variant={cardVariant} />
-          ))}
-        </div>
-
-        <div className="skills-column">
-          {/* right column: last two groups */}
-          {skillGroups.slice(2, 4).map((group) => (
-            <SkillCard key={group.title} group={group} variant={cardVariant} />
-          ))}
-        </div>
+        {skillGroups.map((group) => (
+          <SkillCard key={group.title} group={group} variant={cardVariant} />
+        ))}
       </motion.div>
 
-      {/* feature cards row */}
       <div className="features-row">
-        <FeatureCard icon={<FiCpu />} title="AI & Machine Learning" text="Developing intelligent solutions with modern ML frameworks" />
-        <FeatureCard icon={<FiTool />} title="RPA Development" text="Automating business processes with robotic process automation" />
-        <FeatureCard icon={<FiMonitor />} title="Full Stack Development" text="End-to-end web application development with modern technologies" />
+        <FeatureCard
+          icon={<FiCpu />}
+          title="AI & Machine Learning"
+          text="Building intelligent systems using modern ML & AI technologies."
+        />
+        <FeatureCard
+          icon={<FiTool />}
+          title="RPA Development"
+          text="Automating business workflows using robotic process automation."
+        />
+        <FeatureCard
+          icon={<FiMonitor />}
+          title="Full Stack Development"
+          text="Creating high-performance frontend and backend applications."
+        />
       </div>
     </section>
   );
 }
 
-/* SkillCard component */
-function SkillCard({ group, variant }) {
-  // set mouse variables on card for glow
-  function handleMove(e) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    e.currentTarget.style.setProperty("--mx", `${x}px`);
-    e.currentTarget.style.setProperty("--my", `${y}px`);
-  }
-  function handleLeave(e) {
-    e.currentTarget.style.setProperty("--mx", `50%`);
-    e.currentTarget.style.setProperty("--my", `50%`);
-  }
+/* ================= Skill Card ================= */
 
+function SkillCard({ group, variant }) {
   return (
-    <motion.article
-      className="skill-card"
-      variants={variant}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-    >
+    <motion.article className="skill-card" variants={variant}>
       <div className="skill-card-head">
+        <div className="skill-icon">{group.icon}</div>
         <h3>{group.title}</h3>
       </div>
 
@@ -130,56 +150,50 @@ function SkillCard({ group, variant }) {
   );
 }
 
-/* SkillRow: label + progress bar (animated) */
+/* ================= Skill Row ================= */
+
 function SkillRow({ name, value }) {
   return (
     <div className="skill-row">
-      <div className="skill-left">
-        <span className="skill-name">{name}</span>
+      <span className="skill-name">{name}</span>
+
+      <div className="progress-wrap">
+        <div className="progress-track"></div>
+
+        <motion.div
+          className="progress-fill"
+          initial={{ width: 0 }}
+          whileInView={{ width: `${value}%` }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          viewport={{ once: true }}
+        />
       </div>
 
-      <div className="skill-right">
-        <div className="progress-wrap" role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}>
-          <div className="progress-track" />
-          <motion.div
-            className="progress-fill"
-            initial={{ width: 0 }}
-            whileInView={{ width: `${value}%` }}
-            transition={{ duration: 1.1, ease: "easeOut" }}
-            viewport={{ once: true, amount: 0.5 }}
-          />
-        </div>
-        <div className="skill-value">{value}%</div>
-      </div>
+      <motion.span
+        className="skill-value"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        viewport={{ once: true }}
+      >
+        {value}%
+      </motion.span>
     </div>
   );
 }
 
-/* Feature card (bottom row) */
-function FeatureCard({ icon, title, text }) {
-  function handleMove(e) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    e.currentTarget.style.setProperty("--mx", `${x}px`);
-    e.currentTarget.style.setProperty("--my", `${y}px`);
-  }
-  function handleLeave(e) {
-    e.currentTarget.style.setProperty("--mx", `50%`);
-    e.currentTarget.style.setProperty("--my", `50%`);
-  }
+/* ================= Feature Card ================= */
 
+function FeatureCard({ icon, title, text }) {
   return (
     <motion.div
       className="feature-card"
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      whileHover={{ scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 220, damping: 18 }}
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 200 }}
     >
       <div className="feature-icon">{icon}</div>
-      <h4 className="feature-title">{title}</h4>
-      <p className="feature-text">{text}</p>
+      <h4>{title}</h4>
+      <p>{text}</p>
     </motion.div>
   );
 }
