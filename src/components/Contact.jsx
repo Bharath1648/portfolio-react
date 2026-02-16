@@ -3,7 +3,7 @@ import React from "react";
 import { FiMail, FiPhone } from "react-icons/fi";
 import { GoLocation } from "react-icons/go";
 import { FaLinkedin, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
-import "./contact.css";
+import "./Contact.css";
 
 const contactItems = [
   {
